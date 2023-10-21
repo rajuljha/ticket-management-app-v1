@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% comment %} {% if ticket.is_resolved %} {% endcomment %}
+
+<div class="card mx-auto" style="width: 75rem">
+	<div class="card-body">
+		<h5 class="card-title"> Closed tickets</h5>
+
+		<table class="table table-bordered">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Ticket ID</th>
+				<th scope="col">Title</th>
+				<th scope="col">Created On</th>
+				<th scope="col">Created By</th>
+				<th scope="col">Status</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for ticket in tickets %}
+			{% if ticket.is_resolved %}
+			<tr>
+				<td scope="row"><small>{{ ticket.ticket_number }}</small></td>
+				<td>{{ ticket.title }}</td>
+				<td>{{ ticket.date_created }}</td>
+				<td>{{ ticket.created_by }}</td>
+				<td><span class="badge bg-danger">{{ ticket.ticket_status }}</span></td>
+				<td> <small> <a href="{% url 'ticket-details' ticket.pk %}">View Details</a> </small></td>
+			</tr>
+			{% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
+
+	</div>
+</div>
+
+{% comment %} {% endif %} {% endcomment %}
+{% endblock content %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="card mx-auto" style="width: 40rem;">
+    <!-- <img src="..." class="card-img-top" alt="..."> -->
+    <div class="card-body">
+        <h5 class="card-title"> Update ticket: </h5>
+
+        <form method='POST'>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="Username" class="form-label">Ticket title</label>
+                {% render_field form.title class="form-control" %}
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Description</label>
+                {% render_field form.description class="form-control" %}
+            </div>
+            
+            <button class="btn btn-primary">Submit</button>
+        </form>
+        <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a> -->
+    </div>
+</div>
+
+{% endblock content %}

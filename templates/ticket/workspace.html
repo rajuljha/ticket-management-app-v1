@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card mx-auto" style="width: 75rem">
+	<div class="card-body">
+		<h5 class="card-title"> My Workspace</h5>
+
+		<table class="table table-bordered">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Ticket ID</th>
+				<th scope="col">Title</th>
+				<th scope="col">Created On</th>
+				<th scope="col">Created By</th>
+				<th scope="col">Status</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for ticket in tickets %}
+			<tr>
+				<td scope="row"><small>{{ ticket.ticket_number }}</small></td>
+				<td>{{ ticket.title }}</td>
+				<td>{{ ticket.date_created }}</td>
+				<td>{{ ticket.created_by }}</td>
+
+				{% if ticket.ticket_status == 'Active' %}
+					<td> <span class="badge bg-success">{{ ticket.ticket_status }} </span></td>
+				{% elif ticket.ticket_status == 'Pending' %}
+					<td> <span class="badge bg-warning">{{ ticket.ticket_status }}</span></td>
+				{% elif ticket.ticket_status == 'Completed' %}
+					<td> <span class="badge bg-danger">{{ ticket.ticket_status }}</span></td>
+				{% endif %}
+
+				<td> <small> <a href="{% url 'ticket-details' ticket.pk %}">View Details</a> </small></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	</div>
+</div>
+
+{% endblock content %}

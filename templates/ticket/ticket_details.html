@@ -1,0 +1,88 @@
+{% extends "base.html" %} 
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-8">
+        <div class="card border-dark mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><b>{{ticket.title}}</b></h5>
+                <p class="card-text"><b>Ticket Number: </b>{{ticket.ticket_number}}</p>
+                <ul class="list-group">
+                    <li class="list-group-item"><p> <strong>Description:</strong> {{ticket.description}} </p></li>
+                    
+                    <li class="list-group-item"><b>Resolved yet?: </b>
+                    {% if ticket.is_resolved %}
+                    <span class="badge bg-success">{{ ticket.ticket_status }}</span>
+                    {% else %}
+                    <span class="badge bg-primary">{{ ticket.ticket_status }}</span>
+                    {% endif %}
+                    </li>
+
+                    <ul class="list-group">
+                        <li class="list-group-item"><b>Created by : </b>{{ticket.created_by}}</li>
+                        <li class="list-group-item"><b>Accepted by : </b>{{ticket.assigned_to}}</li>
+    
+                        <li class="list-group-item"><b>Accepted date : </b>
+                            {% if not ticket.ticket_status == 'Pending' %}
+                                {{ticket.accepted_date}}
+                            {% else %}
+                            <span class="badge bg-primary">Not accepted yet</span>
+                            {% endif %}
+                        </li>
+    
+                        {% if ticket.ticket_status == 'Completed' %}
+                        <li class="list-group-item"><b>Closed date : </b>{{ticket.closed_date}}</li>
+                        {% endif %}
+                    </ul>
+
+                    {% comment %} ''' FOR ENGINEERS ''' {% endcomment %}
+                    {% if ticket.ticket_status == 'Pending' and request.user.is_engineer %}
+                    <li class="list-group-item">
+                        <button class="btn btn-primary">
+                            <a style="text-decoration:none" href="{% url 'accept-ticket' ticket.pk %}"><span class="text-white">Accept Ticket</span></a>
+                        </button>
+                    </li>
+
+                    {% elif ticket.ticket_status == 'Active' and request.user.is_engineer %}
+                    <li class="list-group-item">
+                        <button class="btn btn-danger">
+                            <a style="text-decoration:none" href="{% url 'close-ticket' ticket.pk %}"><span class="text-white">Close Ticket</span></a>
+                        </button>
+                    </li>
+                    
+                    {% endif %}
+
+                    {% comment %} ''' FOR CUSTOMERS ''' {% endcomment %}
+                    {% if ticket.ticket_status != 'Completed' and request.user.is_customer %}
+                    <li class="list-group-item">
+                        <button class="btn btn-primary">
+                            <a style="text-decoration:none" href="{% url 'update-ticket' ticket.pk %}"><span class="text-white">Update Ticket</span></a>
+                        </button>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card border-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title"> More unresolved tickets by <i>{{request.user.username}}</i></h5>
+
+                {% for ticket in tickets_per_user %}
+                    {% if not ticket.ticket_status == 'Completed' %}
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>{{ticket.title}}</strong>
+                            <a href="{% url 'ticket-details' ticket.pk %}"> (view) </a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                {% endfor%}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
