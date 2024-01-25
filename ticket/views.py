@@ -29,7 +29,7 @@ def create_ticket(request):
             var.ticket_status = 'Pending'
             var.save()
             messages.info(request, 'Your ticket has been successfully created! An engineer would be assigned soon!')
-            return redirect('dashboard')
+            return redirect('customer_dashboard')
         else:
             messages.warning(request, 'Something went wrong! Check your inputs')
             return redirect('create-ticket')
@@ -48,7 +48,7 @@ def update_ticket(request,pk):
             if form.is_valid():
                 form.save()
                 messages.info(request,'Your ticket has been successfully updated!')
-                return redirect('dashboard')
+                return redirect('engineer_dashboard')
             else:
                 messages.warning(request, 'Something went wrong! Check your inputs')
                 # return redirect('create-ticket')
@@ -58,7 +58,7 @@ def update_ticket(request,pk):
             return render(request, 'ticket/update_ticket.html', context)
     else:
         messages.warning(request,'You cannot update a closed ticket')
-        return redirect('dashboard')
+        return redirect('engineer_dashboard')
 
 # viewing all tickets
 @login_required
