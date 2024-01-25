@@ -6,7 +6,10 @@ name = "pypi"
 [packages]
 django = "*"
 django-widget-tweaks = "*"
-python-dotenv = "*"
+django-dotenv = "*"
+whitenoise = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
