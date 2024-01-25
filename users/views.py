@@ -32,7 +32,10 @@ def login_user(request):
         if user is not None and user.is_active:
             login(request,user)
             messages.info(request,'Logged in successfully! Please enjoy your session')
-            return redirect('dashboard')
+            if user.is_customer:
+                return redirect('customer_dashboard')
+            elif user.is_engineer:
+                return redirect('engineer_dashboard')
         else:
             messages.warning(request,'Something went wrong! Check your inputs')
             return redirect('login')
