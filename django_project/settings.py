@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ.get('DEBUG')) == "1"
 
-ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0','ticket-management-app-v1.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0','13.228.225.19','18.142.128.26','54.254.162.138']
 
 
 # Application definition
