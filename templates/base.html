@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/customer">Home</a>
+                        <a class="nav-link active" aria-current="page" href="{% url 'customer_dashboard' %}">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="{% url 'create-ticket' %}">Create Ticket</a>
@@ -90,6 +90,41 @@
             </div>
         </div>
     </nav>
+
+    {% else %}
+
+        {% comment %} Navbar {% endcomment %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#"> Ticketly </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                <a class="nav-link" target=”_blank” href="https://github.com/rajuljha/ticket-management-app-v1/blob/main/README.md"> Read <span class="sr-only">the docs</span></a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" target=”_blank” href="https://github.com/rajuljha/ticket-management-app-v1">Chekout the Code</a>
+                </li>
+            </div>
+        </nav>
+
+        {% comment %} Content {% endcomment %}
+        <div class="jumbotron justify-content-center align-items-center text-center position-relative">
+            <h1 class="display-4">Welcome to Ticketly</h1>
+            <p class="lead">Your go to ticket management system!</p>
+            <hr class="my-4">
+            <p> Either login to continue, or register as a fresh new customer to get started.</p>
+            <button class="btn btn-primary">
+                <a style="text-decoration:none" href="{% url 'register-customer' %}"><span class="text-white">Register now</span></a>
+            </button>
+            
+            <button class="btn btn-dark">
+                <a style="text-decoration:none" href="{% url 'login' %}"><span class="text-white">Login</span></a>
+            </button>
+            
+        </div>
 
     {% endif %}
 
